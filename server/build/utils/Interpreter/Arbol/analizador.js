@@ -72,12 +72,12 @@
   }
 */
 var analizador = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,7],$V1=[1,6],$V2=[1,8],$V3=[1,9],$V4=[2,5,9,11,18],$V5=[1,16],$V6=[1,17],$V7=[1,18],$V8=[10,14];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,7],$V1=[1,6],$V2=[1,8],$V3=[1,9],$V4=[2,5,9,14,21],$V5=[1,18],$V6=[1,19],$V7=[1,20],$V8=[1,24],$V9=[1,25],$Va=[10,16,20,24,25],$Vb=[16,25];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"INIT":3,"instrucciones":4,"EOF":5,"instruccion":6,"imprimir":7,"declaracion":8,"INVALID":9,"PTCOMA":10,"RESPRINT":11,"PARABRE":12,"expresion":13,"PARCIERRA":14,"ENTERO":15,"CADENA":16,"IDENTIFICADOR":17,"T_INT":18,"T_IGUAL":19,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",9:"INVALID",10:"PTCOMA",11:"RESPRINT",12:"PARABRE",14:"PARCIERRA",15:"ENTERO",16:"CADENA",17:"IDENTIFICADOR",18:"T_INT",19:"T_IGUAL"},
-productions_: [0,[3,2],[4,2],[4,1],[6,1],[6,1],[6,1],[6,2],[7,5],[13,1],[13,1],[13,1],[8,5]],
+symbols_: {"error":2,"INIT":3,"instrucciones":4,"EOF":5,"instruccion":6,"imprimir":7,"declaracion":8,"INVALID":9,"PTCOMA":10,"imprimible":11,"expresion":12,"expresion_logica":13,"RESPRINT":14,"PARABRE":15,"PARCIERRA":16,"ENTERO":17,"CADENA":18,"IDENTIFICADOR":19,"T_MAS":20,"T_INT":21,"T_IGUAL":22,"expresion_relacional":23,"T_MAYORQ":24,"T_OR":25,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",9:"INVALID",10:"PTCOMA",14:"RESPRINT",15:"PARABRE",16:"PARCIERRA",17:"ENTERO",18:"CADENA",19:"IDENTIFICADOR",20:"T_MAS",21:"T_INT",22:"T_IGUAL",24:"T_MAYORQ",25:"T_OR"},
+productions_: [0,[3,2],[4,2],[4,1],[6,1],[6,1],[6,1],[6,2],[11,1],[11,1],[7,5],[12,1],[12,1],[12,1],[12,3],[8,5],[23,3],[13,3],[13,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -94,7 +94,7 @@ break;
 case 3:
 this.$=[$$[$0]];
 break;
-case 4: case 5:
+case 4: case 5: case 8: case 9:
 this.$=$$[$0];
 break;
 case 6:
@@ -103,26 +103,38 @@ break;
 case 7:
 controller.listaErrores.push(new errores.default(`ERROR SINTACTICO`,"Se esperaba token",_$[$0-1].first_line,_$[$0-1].first_column));
 break;
-case 8:
+case 10:
 this.$=new impresion.default($$[$0-2],_$[$0-4].first_line,_$[$0-4].first_column);
 break;
-case 9:
+case 11:
 this.$=new nativo.default(new Tipo.default(Tipo.DataType.ENTERO),$$[$0], _$[$0].first_line, _$[$0].first_column)
 break;
-case 10:
+case 12:
 this.$=new nativo.default(new Tipo.default(Tipo.DataType.CADENA),$$[$0], _$[$0].first_line, _$[$0].first_column)
 break;
-case 11:
+case 13:
 this.$=new nativo.default(new Tipo.default(Tipo.DataType.IDENTIFICADOR), $$[$0], _$[$0].first_line, _$[$0].first_column)
 break;
-case 12:
+case 14:
+ this.$ = new aritmetico.default(aritmetico.tipoOp.SUMA, $$[$0-2]/*.returnInstruction*/, $$[$0]/*.returnInstruction*/, _$[$0-2].first_line, _$[$0-2].first_column)
+break;
+case 15:
 
         this.$=new declaracion.default($$[$0-3], new Tipo.default(Tipo.DataType.ENTERO), $$[$0-1]/*.returnInstruction*/, _$[$0-4].first_line, _$[$0-4].first_column)
     
 break;
+case 16:
+this.$ = new relacional.default(relacional.tipoOp.MAYOR, $$[$0-2], $$[$0], _$[$0-2].first_line, _$[$0-2].first_column);
+break;
+case 17:
+this.$ = new logica.default(logica.tipoOp.OR, $$[$0-2], $$[$0], _$[$0-2].first_line, _$[$0-2].first_column);
+break;
+case 18:
+this.$ = $$[$0];
+break;
 }
 },
-table: [{2:$V0,3:1,4:2,6:3,7:4,8:5,9:$V1,11:$V2,18:$V3},{1:[3]},{2:$V0,5:[1,10],6:11,7:4,8:5,9:$V1,11:$V2,18:$V3},o($V4,[2,3]),o($V4,[2,4]),o($V4,[2,5]),o($V4,[2,6]),{10:[1,12]},{12:[1,13]},{17:[1,14]},{1:[2,1]},o($V4,[2,2]),o($V4,[2,7]),{13:15,15:$V5,16:$V6,17:$V7},{19:[1,19]},{14:[1,20]},o($V8,[2,9]),o($V8,[2,10]),o($V8,[2,11]),{13:21,15:$V5,16:$V6,17:$V7},{10:[1,22]},{10:[1,23]},o($V4,[2,8]),o($V4,[2,12])],
+table: [{2:$V0,3:1,4:2,6:3,7:4,8:5,9:$V1,14:$V2,21:$V3},{1:[3]},{2:$V0,5:[1,10],6:11,7:4,8:5,9:$V1,14:$V2,21:$V3},o($V4,[2,3]),o($V4,[2,4]),o($V4,[2,5]),o($V4,[2,6]),{10:[1,12]},{15:[1,13]},{19:[1,14]},{1:[2,1]},o($V4,[2,2]),o($V4,[2,7]),{11:15,12:16,13:17,17:$V5,18:$V6,19:$V7,23:21},{22:[1,22]},{16:[1,23]},{16:[2,8],20:$V8,24:$V9},{16:[2,9],25:[1,26]},o($Va,[2,11]),o($Va,[2,12]),o($Va,[2,13]),o($Vb,[2,18]),{12:27,17:$V5,18:$V6,19:$V7},{10:[1,28]},{12:29,17:$V5,18:$V6,19:$V7},{12:30,17:$V5,18:$V6,19:$V7},{12:32,17:$V5,18:$V6,19:$V7,23:31},{10:[1,33],20:$V8},o($V4,[2,10]),o($Va,[2,14]),o($Vb,[2,16],{20:$V8}),o($Vb,[2,17]),{20:$V8,24:$V9},o($V4,[2,15])],
 defaultActions: {10:[2,1]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
@@ -392,6 +404,9 @@ _handle_error:
     const controller = require('../../../controller/parser/parser');
     const errores = require('./Exceptions/Error');
     const declaracion = require('./Instructions/Declaracion');
+    const aritmetico = require('./Expresions/Aritmetica');
+    const relacional = require('./Expresions/Relacional');
+    const logica = require('./Expresions/Logica');
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){
 var lexer = ({
@@ -720,36 +735,42 @@ options: {"case-insensitive":true},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:return 11;
+case 0:return 14;
 break;
-case 1:return 18;
+case 1:return 21;
 break;
-case 2:return 19;
+case 2:return 25;
 break;
-case 3:return 10;
+case 3:return 22;
 break;
-case 4:return 12;
+case 4:return 20;
 break;
-case 5:return 14;
+case 5:return 10;
 break;
-case 6: 
+case 6:return 15;
 break;
-case 7:
+case 7:return 16;
 break;
-case 8: yy_.yytext=yy_.yytext.substr(1,yy_.yyleng-2); return 16; 
+case 8:return 24
 break;
-case 9:return 15;
+case 9: 
 break;
-case 10:return 17;
+case 10:
 break;
-case 11:return 5;
+case 11: yy_.yytext=yy_.yytext.substr(1,yy_.yyleng-2); return 18; 
 break;
-case 12:return 9
+case 12:return 17;
+break;
+case 13:return 19;
+break;
+case 14:return 5;
+break;
+case 15:return 9
 break;
 }
 },
-rules: [/^(?:imprimir\b)/i,/^(?:int\b)/i,/^(?:=)/i,/^(?:;)/i,/^(?:\()/i,/^(?:\))/i,/^(?:[ \r\t]+)/i,/^(?:\n)/i,/^(?:"[^\"]*")/i,/^(?:[0-9]+)/i,/^(?:[A-Za-z]+["_"0-9A-Za-z]*)/i,/^(?:$)/i,/^(?:.)/i],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12],"inclusive":true}}
+rules: [/^(?:imprimir\b)/i,/^(?:int\b)/i,/^(?:\|\|)/i,/^(?:=)/i,/^(?:\+)/i,/^(?:;)/i,/^(?:\()/i,/^(?:\))/i,/^(?:>)/i,/^(?:[ \r\t]+)/i,/^(?:\n)/i,/^(?:"[^\"]*")/i,/^(?:[0-9]+)/i,/^(?:[A-Za-z]+["_"0-9A-Za-z]*)/i,/^(?:$)/i,/^(?:.)/i],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"inclusive":true}}
 });
 return lexer;
 })();

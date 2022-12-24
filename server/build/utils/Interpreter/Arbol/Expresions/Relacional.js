@@ -22,30 +22,38 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.tipoOp = void 0;
 const Instruccion_1 = require("../Abstract/Instruccion");
 const Type_1 = __importStar(require("../Symbol/Type"));
-const get_1 = __importDefault(require("lodash/get"));
-class Nativo extends Instruccion_1.Instruccion {
-    constructor(tipo, valor, fila, columna) {
-        super(tipo, fila, columna);
-        this.valor = valor;
+class Relacional extends Instruccion_1.Instruccion {
+    constructor(tipo, opIzq, opDer, fila, columna) {
+        super(new Type_1.default(Type_1.DataType.INDEFINIDO), fila, columna);
+        this.tipo = tipo;
+        this.operacionIzq = opIzq;
+        this.operacionDer = opDer;
     }
     interpretar(arbol, tabla) {
-        if (this.tipoDato.getTipo() === Type_1.DataType.ENTERO) {
-            return this.valor;
+        const validTypesOperations = [Type_1.DataType.ENTERO, Type_1.DataType.DECIMAL];
+        let valueIzq = this.operacionIzq.interpretar(arbol, tabla);
+        let valueDer = this.operacionDer.interpretar(arbol, tabla);
+        if (validTypesOperations.includes(this.operacionIzq.tipoDato.getTipo())
+            && validTypesOperations.includes(this.operacionDer.tipoDato.getTipo())) {
+            if (this.tipo === tipoOp.MAYOR) {
+                this.tipoDato = new Type_1.default(Type_1.DataType.BOOLEAN);
+                return valueIzq > valueDer;
+            }
         }
-        else if (this.tipoDato.getTipo() === Type_1.DataType.CADENA) {
-            return this.valor.toString();
-        }
-        else if (this.tipoDato.getTipo() === Type_1.DataType.IDENTIFICADOR) {
-            let value = tabla.getValor(this.valor);
-            this.tipoDato = (0, get_1.default)(value, 'tipo', new Type_1.default(Type_1.DataType.INDEFINIDO));
-            return (0, get_1.default)(value, 'valor');
+        else {
+            return null;
         }
     }
 }
-exports.default = Nativo;
+exports.default = Relacional;
+var tipoOp;
+(function (tipoOp) {
+    tipoOp[tipoOp["MAYOR"] = 0] = "MAYOR";
+    tipoOp[tipoOp["MENOR"] = 1] = "MENOR";
+    tipoOp[tipoOp["MAYOR_IGUAL"] = 2] = "MAYOR_IGUAL";
+    tipoOp[tipoOp["MENOR_IGUAL"] = 3] = "MENOR_IGUAL";
+})(tipoOp = exports.tipoOp || (exports.tipoOp = {}));

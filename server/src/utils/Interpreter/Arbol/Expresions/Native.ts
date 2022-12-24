@@ -7,8 +7,8 @@ import get from 'lodash/get';
 export default class Nativo extends Instruccion {
   valor: any;
 
-  constructor(tipo: DataType, valor: any, fila: number, columna: number) {
-    super(new Type(tipo), fila, columna);
+  constructor(tipo: Type, valor: any, fila: number, columna: number) {
+    super(tipo, fila, columna);
     this.valor = valor;
   }
 
@@ -20,7 +20,7 @@ export default class Nativo extends Instruccion {
         return this.valor.toString();
     }else if(this.tipoDato.getTipo() === DataType.IDENTIFICADOR){
       let value = tabla.getValor(this.valor)
-      this.tipoDato = get(value, 'tipo', new Type(DataType.INDEFINIDO));
+      //this.tipoDato = get(value, 'tipo', new Type(DataType.INDEFINIDO));
       return get(value, 'valor')
     }    
   }

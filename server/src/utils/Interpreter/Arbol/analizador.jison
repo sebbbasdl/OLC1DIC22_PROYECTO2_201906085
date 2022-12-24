@@ -18,6 +18,7 @@
     const Tipo = require('./Symbol/Type');
     const controller = require('../../../controller/parser/parser');
     const errores = require('./Exceptions/Error');
+    const declaracion = require('./Instructions/Declaracion');
 %}
 %lex 
 
@@ -26,6 +27,8 @@
 //inicio analisis lexico
 %%
 "imprimir"      return 'RESPRINT';
+"int"           return 'T_INT';
+"="             return 'T_IGUAL';
 ";"             return 'PTCOMA';
 "("             return 'PARABRE';
 ")"             return 'PARCIERRA';
@@ -62,6 +65,7 @@ instrucciones :
 ;
 
 instruccion : imprimir  {$$=$1;}
+            | declaracion {$$=$1;}
             | INVALID               {controller.listaErrores.push(new errores.default('ERROR LEXICO',$1,@1.first_line,@1.first_column));}
             | error  PTCOMA         {controller.listaErrores.push(new errores.default(`ERROR SINTACTICO`,"Se esperaba token",@1.first_line,@1.first_column));}
 ;
@@ -69,7 +73,14 @@ instruccion : imprimir  {$$=$1;}
 imprimir : RESPRINT PARABRE expresion PARCIERRA PTCOMA{$$=new impresion.default($3,@1.first_line,@1.first_column);}
 ;
 
-expresion : ENTERO {$$=new nativo.default(Tipo.DataType.ENTERO,$1, @1.first_line, @1.first_column)}
-          | CADENA {$$=new nativo.default(Tipo.DataType.CADENA,$1, @1.first_line, @1.first_column)}
+expresion : ENTERO {$$=new nativo.default(new Tipo.default(Tipo.DataType.ENTERO),$1, @1.first_line, @1.first_column)}
+          | CADENA {$$=new nativo.default(new Tipo.default(Tipo.DataType.CADENA),$1, @1.first_line, @1.first_column)}
+          | IDENTIFICADOR {$$=new nativo.default(new Tipo.default(Tipo.DataType.IDENTIFICADOR), $1, @1.first_line, @1.first_column)}
+;
+
+declaracion:
+    T_INT IDENTIFICADOR T_IGUAL expresion PTCOMA {
+        $$=new declaracion.default($2, new Tipo.default(Tipo.DataType.ENTERO), $4/*.returnInstruction*/, @1.first_line, @1.first_column)
+    }
 ;
 

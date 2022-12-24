@@ -7,6 +7,7 @@ exports.parse = exports.listaErrores = void 0;
 const Error_1 = __importDefault(require("../../utils/Interpreter/Arbol/Exceptions/Error"));
 const Three_1 = __importDefault(require("../../utils/Interpreter/Arbol/Symbol/Three"));
 const SymbolTable_1 = __importDefault(require("../../utils/Interpreter/Arbol/Symbol/SymbolTable"));
+const Instruccion_1 = require("../../utils/Interpreter/Arbol/Abstract/Instruccion");
 exports.listaErrores = [];
 const parse = (req, res) => {
     exports.listaErrores = new Array();
@@ -22,7 +23,7 @@ const parse = (req, res) => {
                 exports.listaErrores.push(i);
                 ast.actualizaConsola(i.returnError());
             }
-            var resultador = i.interpretar(ast, tabla) /*i instanceof Instruccion ? i.interpretar(ast, tabla) : new Errores("ERROR SEMANTICO", "no se puede ejecutar la instruccion", 0, 0)*/;
+            var resultador = i instanceof Instruccion_1.Instruccion ? i.interpretar(ast, tabla) : new Error_1.default("Error Semantico", "no se puede ejecutar la instruccion", 0, 0);
             if (resultador instanceof Error_1.default) {
                 exports.listaErrores.push(resultador);
                 ast.actualizaConsola(resultador.returnError());

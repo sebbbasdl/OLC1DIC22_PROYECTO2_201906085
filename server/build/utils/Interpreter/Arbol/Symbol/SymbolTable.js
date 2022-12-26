@@ -7,13 +7,13 @@ class SymbolTable {
     }
     getValor(id) {
         let valor = this.tablaActual.get(id);
-        /*if(!valor) {
-          let actual: SymbolTable = this.getAnterior();
-          while(actual && !valor){
-            valor = actual.getTabla().get(id);
-            actual = actual.getAnterior();
-          }
-        }*/
+        if (!valor) {
+            let actual = this.getAnterior();
+            while (actual && !valor) {
+                valor = actual.getTabla().get(id);
+                actual = actual.getAnterior();
+            }
+        }
         return valor;
     }
     setValor(id, valor, declaration = true) {

@@ -11,13 +11,13 @@ export default class SymbolTable {
 
   public getValor(id: String): any{
     let valor = this.tablaActual.get(id);
-    /*if(!valor) {
+    if(!valor) {
       let actual: SymbolTable = this.getAnterior();
       while(actual && !valor){
         valor = actual.getTabla().get(id);
         actual = actual.getAnterior();
       }
-    }*/
+    }
     return valor;
   }
 

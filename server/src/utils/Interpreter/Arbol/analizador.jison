@@ -22,6 +22,7 @@
     const aritmetico = require('./Expresions/Aritmetica');
     const relacional = require('./Expresions/Relacional');
     const logica = require('./Expresions/Logica');
+    const ifIns = require('./Instructions/IfIns');  
 %}
 %lex 
 
@@ -32,13 +33,16 @@
 "imprimir"      return 'RESPRINT';
 "int"           return 'T_INT';
 "||"            return 'T_OR';
+"if"            return 'T_IF';
 
 "="             return 'T_IGUAL';
 "+"             return 'T_MAS';
 ";"             return 'PTCOMA';
 "("             return 'PARABRE';
 ")"             return 'PARCIERRA';
-">"             return 'T_MAYORQ'
+"{"             return 'LLAVIZQ';
+"}"             return 'LLAVDER';
+">"             return 'T_MAYORQ';
 
 
 [ \r\t]+ { }
@@ -73,6 +77,7 @@ instrucciones :
 
 instruccion : imprimir  {$$=$1;}
             | declaracion {$$=$1;}
+            | ifins {$$=$1;}
             | INVALID               {controller.listaErrores.push(new errores.default('ERROR LEXICO',$1,@1.first_line,@1.first_column));}
             | error  PTCOMA         {controller.listaErrores.push(new errores.default(`ERROR SINTACTICO`,"Se esperaba token",@1.first_line,@1.first_column));}
 ;
@@ -98,6 +103,10 @@ declaracion:
     }
 ;
 
+ifins:
+     T_IF PARABRE expresion_logica PARCIERRA LLAVIZQ instrucciones LLAVDER{$$=new ifIns.default($3,$6,undefined,undefined,@1.first_line,@1.first_column);} 
+;
+
 expresion_relacional:
         expresion T_MAYORQ expresion {$$ = new relacional.default(relacional.tipoOp.MAYOR, $1, $3, @1.first_line, @1.first_column);}
 ;
@@ -106,4 +115,6 @@ expresion_logica:
     expresion_logica T_OR expresion_relacional {$$ = new logica.default(logica.tipoOp.OR, $1, $3, @1.first_line, @1.first_column);}
     | expresion_relacional                   {$$ = $1;}
 ;
+
+
 

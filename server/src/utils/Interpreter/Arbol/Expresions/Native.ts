@@ -18,10 +18,16 @@ export default class Nativo extends Instruccion {
         return this.valor;
     }else if(this.tipoDato.getTipo() === DataType.CADENA){
         return this.valor.toString();
+    }else if(this.tipoDato.getTipo() === DataType.BOOLEAN){
+        return this.valor;
+    }else if(this.tipoDato.getTipo() === DataType.CHAR){
+        return this.valor;
+    }else if(this.tipoDato.getTipo() === DataType.DECIMAL){
+        return this.valor;
     }else if(this.tipoDato.getTipo() === DataType.IDENTIFICADOR){
-      let value = tabla.getValor(this.valor)
-      this.tipoDato = get(value, 'tipo', new Type(DataType.INDEFINIDO));
-      return get(value, 'valor')
+        let value = tabla.getValor(this.valor)
+        this.tipoDato = get(value, 'tipo', new Type(DataType.INDEFINIDO));
+        return get(value, 'valor')
     }    
   }
 }

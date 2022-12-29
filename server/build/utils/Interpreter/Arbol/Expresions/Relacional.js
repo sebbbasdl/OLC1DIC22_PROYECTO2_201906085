@@ -34,7 +34,7 @@ class Relacional extends Instruccion_1.Instruccion {
         this.operacionDer = opDer;
     }
     interpretar(arbol, tabla) {
-        const validTypesOperations = [Type_1.DataType.ENTERO, Type_1.DataType.DECIMAL];
+        const validTypesOperations = [Type_1.DataType.ENTERO, Type_1.DataType.DECIMAL, Type_1.DataType.BOOLEAN, Type_1.DataType.CADENA, Type_1.DataType.CHAR];
         let valueIzq = this.operacionIzq.interpretar(arbol, tabla);
         let valueDer = this.operacionDer.interpretar(arbol, tabla);
         if (validTypesOperations.includes(this.operacionIzq.tipoDato.getTipo())
@@ -42,6 +42,26 @@ class Relacional extends Instruccion_1.Instruccion {
             if (this.tipo === tipoOp.MAYOR) {
                 this.tipoDato = new Type_1.default(Type_1.DataType.BOOLEAN);
                 return valueIzq > valueDer;
+            }
+            else if (this.tipo === tipoOp.MENOR) {
+                this.tipoDato = new Type_1.default(Type_1.DataType.BOOLEAN);
+                return valueIzq < valueDer;
+            }
+            else if (this.tipo === tipoOp.MAYOR_IGUAL) {
+                this.tipoDato = new Type_1.default(Type_1.DataType.BOOLEAN);
+                return valueIzq >= valueDer;
+            }
+            else if (this.tipo === tipoOp.MENOR_IGUAL) {
+                this.tipoDato = new Type_1.default(Type_1.DataType.BOOLEAN);
+                return valueIzq <= valueDer;
+            }
+            else if (this.tipo === tipoOp.IGUAL_IGUAL) {
+                this.tipoDato = new Type_1.default(Type_1.DataType.BOOLEAN);
+                return valueIzq == valueDer;
+            }
+            else if (this.tipo === tipoOp.DIFERENTE_IGUAL) {
+                this.tipoDato = new Type_1.default(Type_1.DataType.BOOLEAN);
+                return valueIzq != valueDer;
             }
         }
         else {
@@ -56,4 +76,6 @@ var tipoOp;
     tipoOp[tipoOp["MENOR"] = 1] = "MENOR";
     tipoOp[tipoOp["MAYOR_IGUAL"] = 2] = "MAYOR_IGUAL";
     tipoOp[tipoOp["MENOR_IGUAL"] = 3] = "MENOR_IGUAL";
+    tipoOp[tipoOp["IGUAL_IGUAL"] = 4] = "IGUAL_IGUAL";
+    tipoOp[tipoOp["DIFERENTE_IGUAL"] = 5] = "DIFERENTE_IGUAL";
 })(tipoOp = exports.tipoOp || (exports.tipoOp = {}));

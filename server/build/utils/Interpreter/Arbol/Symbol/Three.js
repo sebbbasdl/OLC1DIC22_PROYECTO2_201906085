@@ -3,20 +3,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Nodo = void 0;
 const SymbolTable_1 = __importDefault(require("./SymbolTable"));
-/*import { CDigraph, CNode, CEdge} from '../../../Graphviz'
-import { toDot } from 'ts-graphviz';*/
+const Graphviz_1 = require("../../../Graphviz");
+const ts_graphviz_1 = require("ts-graphviz");
 class Three {
-    //private raiz: Nodo;
-    //private graphIndex: number;
-    constructor(instrucciones) {
-        // this.instrucciones = production.returnInstruction;
-        this.instrucciones = instrucciones;
+    constructor(production) {
+        this.instrucciones = production.returnInstruction;
         this.consola = '';
         this.tablaGlobal = new SymbolTable_1.default();
         this.errores = new Array();
-        // this.raiz = production.nodeInstruction;
-        //this.graphIndex = 0;
+        this.raiz = production.nodeInstruction;
+        this.semanticErrors = [];
+        this.graphIndex = 0;
+    }
+    setSemanticError(error) {
+        this.semanticErrors.push(error);
+    }
+    getSemanticError() {
+        return this.semanticErrors;
     }
     getconsola() {
         return this.consola;
@@ -45,49 +50,61 @@ class Three {
     settablaGlobal(value) {
         this.tablaGlobal = value;
     }
+    getRaiz() {
+        return this.raiz;
+    }
+    buildTree(padre, nodoPadre, digraph) {
+        const nodos = padre.getHijos();
+        for (let i = 0; i < nodos.length; i++) {
+            const nodo = nodos[i];
+            const node = new Graphviz_1.CNode(this.graphIndex++, nodo.getValor());
+            digraph.addNode(node);
+            const edge = new Graphviz_1.CEdge([nodoPadre, node], "");
+            digraph.addEdge(edge);
+            this.buildTree(nodo, node, digraph);
+        }
+    }
+    getTree(name) {
+        const digraph = new Graphviz_1.CDigraph(name);
+        const actual = this.raiz;
+        const node = new Graphviz_1.CNode(this.graphIndex++, actual.getValor());
+        digraph.addNode(node);
+        this.buildTree(actual, node, digraph);
+        this.graphIndex = 0;
+        return (0, ts_graphviz_1.toDot)(digraph);
+    }
 }
 exports.default = Three;
-/*
-export class Nodo {
-    private hijos: Nodo [];
-    private padre: Nodo | undefined;
-    private valor: any;
-
-    constructor(valor: any) {
+class Nodo {
+    constructor(valor) {
         this.valor = valor;
         this.hijos = [];
     }
-
-    public getValor(): any {
+    getValor() {
         return this.valor;
     }
-
-    public setValor(valor: any) {
+    setValor(valor) {
         this.valor = valor;
     }
-
-    public setHijos(hijos: Nodo[]) {
+    setHijos(hijos) {
         this.hijos = hijos;
     }
-
-    public setPadre(padre: Nodo) {
+    setPadre(padre) {
         this.padre = padre;
     }
-
-    public getPadre(): Nodo | undefined {
+    getPadre() {
         return this.padre;
     }
-
-    public getHijos(): Nodo[] {
+    getHijos() {
         return this.hijos;
     }
-
-    public generateProduction(labels: any[]): Nodo {
+    generateProduction(labels) {
         labels.forEach(element => {
             (typeof element === "string" && this.hijos.push(new Nodo(element)))
-            ||
-            (element instanceof Nodo && this.hijos.push(element))
+                ||
+                    (element instanceof Nodo && this.hijos.push(element));
         });
         return this;
     }
-}*/ 
+}
+exports.Nodo = Nodo;

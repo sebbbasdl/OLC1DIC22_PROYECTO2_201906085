@@ -18,21 +18,23 @@ class SymbolTable {
     }
     setValor(id, valor, declaration = true) {
         var _a;
-        /*if(declaration) this.tablaActual.set(id, valor);
+        if (declaration)
+            this.tablaActual.set(id, valor);
         else {
-          let actual: SymbolTable = this
-          let oldValue = null
-          while(actual){
-            if(actual.getTabla().get(id)){
-              oldValue = actual.getTabla().get(id);
-              actual.getTabla().delete(id);
-              actual.getTabla().set(id, valor);
-              break;
+            let actual = this;
+            let oldValue = null;
+            while (actual) {
+                if (actual.getTabla().get(id)) {
+                    oldValue = actual.getTabla().get(id);
+                    actual.getTabla().delete(id);
+                    actual.getTabla().set(id, valor);
+                    break;
+                }
+                actual = actual.getAnterior();
             }
-            actual = actual.getAnterior();
-          }
-          if(!oldValue) console.log('Error la variable no existe')
-        }*/
+            if (!oldValue)
+                console.log('Error la variable no existe');
+        }
         this.tablaActual.set(id, valor);
         console.log(id + "=" + ((_a = this.tablaActual.get(id)) === null || _a === void 0 ? void 0 : _a.getvalor()));
         return null;

@@ -14,10 +14,19 @@ export default class Declaracion extends Instruccion {
         this.id = id;
         this.tipo = tipo;
         this.valor = valor;
+        
     }
 
     public interpretar(arbol: Arbol, tabla: tablaSimbolo) {
-        tabla.setValor(this.id, new Simbolo(this.tipo, this.id, this.valor.interpretar(arbol, tabla)));
+        console.log(this.tipo.getTipo())
+        console.log(this.valor.tipoDato.getTipo())
+        if(this.tipo.getTipo()==this.valor.tipoDato.getTipo() ||this.valor.tipoDato.getTipo()==7){
+            tabla.setValor(this.id, new Simbolo(this.tipo, this.id, this.valor.interpretar(arbol, tabla)));
+        }else{
+            arbol.setSemanticError("No es posible realizar la declaracion ya que son de tipos de datos diferentes en la linea: "+this.linea+" columna: "+this.columna)
+        }
+
+        
         return null;
     }
 }

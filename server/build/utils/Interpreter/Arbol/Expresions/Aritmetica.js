@@ -47,16 +47,37 @@ class Aritmetico extends Instruccion_1.Instruccion {
                     return (`${valueIzq.toString()}${valueDer.toString()}`);
                 }
             }
-        } /*else if(this.tipo===tipoOp.RESTA){
+        }
+        else if (this.tipo === tipoOp.RESTA) {
             let valueIzq = this.operacionIzq.interpretar(arbol, tabla);
             let valueDer = this.operacionDer.interpretar(arbol, tabla);
-            if(this.operacionIzq.tipoDato.getTipo() === DataType.ENTERO){
-                if(this.operacionDer.tipoDato.getTipo() === DataType.ENTERO){
-                    this.tipoDato.setTipo(DataType.ENTERO);
-                    return (Number(valueIzq)-Number(valueDer));
+            if (this.operacionIzq.tipoDato.getTipo() === Type_1.DataType.ENTERO) {
+                if (this.operacionDer.tipoDato.getTipo() === Type_1.DataType.ENTERO) {
+                    this.tipoDato.setTipo(Type_1.DataType.ENTERO);
+                    return (Number(valueIzq) - Number(valueDer));
                 }
             }
-        } */
+        }
+        else if (this.tipo === tipoOp.MULTIPLICACION) {
+            let valueIzq = this.operacionIzq.interpretar(arbol, tabla);
+            let valueDer = this.operacionDer.interpretar(arbol, tabla);
+            if (this.operacionIzq.tipoDato.getTipo() === Type_1.DataType.ENTERO) {
+                if (this.operacionDer.tipoDato.getTipo() === Type_1.DataType.ENTERO) {
+                    this.tipoDato.setTipo(Type_1.DataType.ENTERO);
+                    return (Number(valueIzq) * Number(valueDer));
+                }
+            }
+        }
+        else if (this.tipo === tipoOp.DIVISION) {
+            let valueIzq = this.operacionIzq.interpretar(arbol, tabla);
+            let valueDer = this.operacionDer.interpretar(arbol, tabla);
+            if (this.operacionIzq.tipoDato.getTipo() === Type_1.DataType.ENTERO) {
+                if (this.operacionDer.tipoDato.getTipo() === Type_1.DataType.ENTERO) {
+                    this.tipoDato.setTipo(Type_1.DataType.ENTERO);
+                    return (Number(valueIzq) / Number(valueDer));
+                }
+            }
+        }
         return null;
     }
 }

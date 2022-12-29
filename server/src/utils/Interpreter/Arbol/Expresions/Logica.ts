@@ -26,6 +26,9 @@ export default class Logica extends Instruccion {
             if(this.tipo===tipoOp.OR){      
                 this.tipoDato = new Tipo(DataType.BOOLEAN);  
                 return valueIzq || valueDer;
+            }else if(this.tipo===tipoOp.AND){      
+                this.tipoDato = new Tipo(DataType.BOOLEAN);  
+                return valueIzq && valueDer;
             }
         }  else {
             return null;

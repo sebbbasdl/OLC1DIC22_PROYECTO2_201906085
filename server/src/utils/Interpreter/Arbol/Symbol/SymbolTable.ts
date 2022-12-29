@@ -22,7 +22,7 @@ export default class SymbolTable {
   }
 
   public setValor(id: String, valor: Simbolo, declaration = true): any{
-    /*if(declaration) this.tablaActual.set(id, valor);
+    if(declaration) this.tablaActual.set(id, valor);
     else {
       let actual: SymbolTable = this
       let oldValue = null
@@ -36,7 +36,7 @@ export default class SymbolTable {
         actual = actual.getAnterior();
       }
       if(!oldValue) console.log('Error la variable no existe')
-    }*/
+    }
     this.tablaActual.set(id,valor)
     console.log(id+"="+this.tablaActual.get(id)?.getvalor())
     return null;

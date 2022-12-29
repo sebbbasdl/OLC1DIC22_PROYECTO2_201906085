@@ -46,6 +46,23 @@ class If extends Instruccion_1.Instruccion {
             }
             return true;
         }
+        else {
+            if (this.listaElseIf) {
+                for (let i of this.listaElseIf) {
+                    const operation = i.interpretar(arbol, tabla);
+                    if (operation) {
+                        return false;
+                    }
+                }
+            }
+            if (this.listaInsElse) {
+                const tablaLocal = new SymbolTable_1.default(tabla);
+                for (let i of this.listaInsElse) {
+                    i.interpretar(arbol, tablaLocal);
+                }
+                return false;
+            }
+        }
     }
 }
 exports.default = If;

@@ -10,7 +10,6 @@ export default class If extends Instruccion {
     private listaElseIf: Instruccion [] | undefined;
     private listaInsElse: Instruccion [] | undefined;
 
-
     constructor(
         operacion: Instruccion, 
         listaInstrucciones: Instruccion[], 
@@ -27,6 +26,7 @@ export default class If extends Instruccion {
     }
 
     public interpretar(arbol: Arbol, tabla: tablaSimbolo) {
+
         const condition = this.operacionIf.interpretar(arbol, tabla)
         if((condition)){
             const tablaLocal = new SymbolTable(tabla)
@@ -34,6 +34,22 @@ export default class If extends Instruccion {
                 i.interpretar(arbol, tablaLocal)
             }
             return true
+        }else{
+            if(this.listaElseIf){ 
+                for(let i of this.listaElseIf){
+                    const operation = i.interpretar(arbol, tabla);
+                    if(operation){
+                        return false;
+                    }
+                }
+            }
+            if(this.listaInsElse){
+                const tablaLocal = new SymbolTable(tabla)
+                for(let i of this.listaInsElse){
+                    i.interpretar(arbol, tablaLocal)
+                }
+                return false
+            }
         }
     }
 }

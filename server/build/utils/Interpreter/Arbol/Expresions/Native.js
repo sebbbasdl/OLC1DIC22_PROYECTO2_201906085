@@ -41,6 +41,15 @@ class Nativo extends Instruccion_1.Instruccion {
         else if (this.tipoDato.getTipo() === Type_1.DataType.CADENA) {
             return this.valor.toString();
         }
+        else if (this.tipoDato.getTipo() === Type_1.DataType.BOOLEAN) {
+            return this.valor;
+        }
+        else if (this.tipoDato.getTipo() === Type_1.DataType.CHAR) {
+            return this.valor;
+        }
+        else if (this.tipoDato.getTipo() === Type_1.DataType.DECIMAL) {
+            return this.valor;
+        }
         else if (this.tipoDato.getTipo() === Type_1.DataType.IDENTIFICADOR) {
             let value = tabla.getValor(this.valor);
             this.tipoDato = (0, get_1.default)(value, 'tipo', new Type_1.default(Type_1.DataType.INDEFINIDO));

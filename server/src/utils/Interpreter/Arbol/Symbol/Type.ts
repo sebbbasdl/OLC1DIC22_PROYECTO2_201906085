@@ -16,7 +16,9 @@ export enum DataType {
     ENTERO,
     CADENA,
     BOOLEAN,
+    CHAR,
     DECIMAL,
     IDENTIFICADOR,
+    VOID,
     INDEFINIDO
 }

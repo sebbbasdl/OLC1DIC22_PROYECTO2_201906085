@@ -43,6 +43,10 @@ class Logica extends Instruccion_1.Instruccion {
                 this.tipoDato = new Type_1.default(Type_1.DataType.BOOLEAN);
                 return valueIzq || valueDer;
             }
+            else if (this.tipo === tipoOp.AND) {
+                this.tipoDato = new Type_1.default(Type_1.DataType.BOOLEAN);
+                return valueIzq && valueDer;
+            }
         }
         else {
             return null;

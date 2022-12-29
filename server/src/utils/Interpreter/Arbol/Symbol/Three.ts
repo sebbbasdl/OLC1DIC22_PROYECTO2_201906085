@@ -1,26 +1,32 @@
 import { Instruccion } from '../Abstract/Instruccion';
 import Errores from '../Exceptions/Error';
 import tablaSimbolo from './SymbolTable';
-/*import { CDigraph, CNode, CEdge} from '../../../Graphviz'
-import { toDot } from 'ts-graphviz';*/
+import { CDigraph, CNode, CEdge} from '../../../Graphviz'
+import { toDot } from 'ts-graphviz';
 
 export default class Three {
   private instrucciones: Array<Instruccion>;
   private errores: Array<Errores>;
   private consola: String;
   private tablaGlobal: tablaSimbolo;
-  //private raiz: Nodo;
-  //private graphIndex: number;
-  constructor(instrucciones: Array<Instruccion>) {
-   // this.instrucciones = production.returnInstruction;
-    this.instrucciones=instrucciones
+  private semanticErrors: any[];
+  private raiz: Nodo;
+  private graphIndex: number;
+  constructor(production: any) {
+    this.instrucciones = production.returnInstruction;
     this.consola = '';
     this.tablaGlobal = new tablaSimbolo();
     this.errores = new Array<Errores>();
-   // this.raiz = production.nodeInstruction;
-    //this.graphIndex = 0;
+    this.raiz = production.nodeInstruction;
+    this.semanticErrors = [];
+    this.graphIndex = 0;
   }
-  
+  public setSemanticError(error: string){
+    this.semanticErrors.push(error)
+  }
+  public getSemanticError(){
+    return this.semanticErrors;
+  }
   public getconsola(): String {
     return this.consola;
   }
@@ -48,12 +54,11 @@ export default class Three {
   public settablaGlobal(value: tablaSimbolo) {
     this.tablaGlobal = value;
   }
- /* public getRaiz() {
+  public getRaiz() {
     return this.raiz;
-  }*/
-  /*public buildTree(padre: Nodo, nodoPadre: CNode, digraph: CDigraph){
+  }
+  public buildTree(padre: Nodo, nodoPadre: CNode, digraph: CDigraph){
     const nodos = padre.getHijos()
-    console.log(nodos)
     for(let i=0; i<nodos.length; i++){
         const nodo = nodos[i];
         const node = new CNode(this.graphIndex++, nodo.getValor());
@@ -75,11 +80,12 @@ export default class Three {
 
       this.buildTree(actual, node, digraph);
       this.graphIndex = 0;
+
       return toDot(digraph)
-  }*/
+  }
 
 }
-/*
+
 export class Nodo {
     private hijos: Nodo [];
     private padre: Nodo | undefined;
@@ -122,4 +128,4 @@ export class Nodo {
         });
         return this;
     }
-}*/
+}

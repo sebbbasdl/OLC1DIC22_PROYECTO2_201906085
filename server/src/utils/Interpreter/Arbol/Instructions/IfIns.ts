@@ -33,6 +33,7 @@ export default class If extends Instruccion {
             for(let i of this.listaInstrucciones){
                 i.interpretar(arbol, tablaLocal)
             }
+            console.log("estoy aqui1")
             return true
         }else{
             if(this.listaElseIf){ 
@@ -42,12 +43,14 @@ export default class If extends Instruccion {
                         return false;
                     }
                 }
+                console.log("estoy aqui2")
             }
             if(this.listaInsElse){
                 const tablaLocal = new SymbolTable(tabla)
                 for(let i of this.listaInsElse){
                     i.interpretar(arbol, tablaLocal)
                 }
+                console.log("estoy aqui3")
                 return false
             }
         }

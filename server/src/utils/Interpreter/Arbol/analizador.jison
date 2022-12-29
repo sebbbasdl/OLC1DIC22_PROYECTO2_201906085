@@ -386,9 +386,18 @@ ifins:
             }}                            
     | T_IF PARABRE expresion_logica PARCIERRA LLAVIZQ instrucciones LLAVDER elseifins T_ELSE LLAVIZQ instrucciones LLAVDER 
                             {$$={
-            returnInstruction: new ifIns.default($3,$6,$8,$11,@1.first_line,@1.first_column),
+            returnInstruction: new ifIns.default($3.returnInstruction,$6.returnInstruction,$8.returnInstruction,$11.returnInstruction,@1.first_line,@1.first_column),
             nodeInstruction: (new Nodo('IFINS')).generateProduction([$1, $2, $3.nodeInstruction, $4, $5, $6.nodeInstruction, $7, $8.nodeInstruction, $9, $10, $11.nodeInstruction,$12])
             };} 
+    | T_IF PARABRE expresion_logica PARCIERRA LLAVIZQ instrucciones LLAVDER T_ELSE LLAVIZQ instrucciones LLAVDER {$$={
+            returnInstruction: new ifIns.default($3.returnInstruction,$6.returnInstruction,undefined,$10.returnInstruction,@1.first_line,@1.first_column),
+            nodeInstruction: (new Nodo('IFINS')).generateProduction([$1, $2, $3.nodeInstruction, $4, $5, $6.nodeInstruction, $7,$8, $9, $10.nodeInstruction, $11])
+            };} 
+    | T_IF PARABRE expresion_logica PARCIERRA LLAVIZQ instrucciones LLAVDER elseifins {$$={
+            returnInstruction: new ifIns.default($3.returnInstruction,$6.returnInstruction,$8.returnInstruction,undefined,@1.first_line,@1.first_column),
+            nodeInstruction: (new Nodo('IFINS')).generateProduction([$1, $2, $3.nodeInstruction, $4, $5, $6.nodeInstruction, $7, $8.nodeInstruction])
+            };} 
+
 ;
 
 simpleif :
@@ -410,7 +419,7 @@ elseifins :
   | T_ELSE simpleif  
                                                 {
                                                     $$={
-                                                        returnInstruction: [$2],
+                                                        returnInstruction: [$2.returnInstruction],
                                                         nodeInstruction: (new Nodo('ELSEIFSINS')).generateProduction([$1, $2.nodeInstruction])
                                                     }
                                                 }
@@ -432,11 +441,11 @@ expresion_relacional:
             }}
         |expresion T_MAYORQ T_IGUAL expresion {$$ = {
             returnInstruction: new relacional.default(relacional.tipoOp.MAYOR_IGUAL, $1.returnInstruction, $4.returnInstruction, @1.first_line, @1.first_column),
-            nodeInstruction: (new Nodo('EXPRESION_RELACIONAL')).generateProduction([$1.nodeInstruction, $2, $4.nodeInstruction])
+            nodeInstruction: (new Nodo('EXPRESION_RELACIONAL')).generateProduction([$1.nodeInstruction, $2+$3, $4.nodeInstruction])
             }}
         |expresion T_MENORQ T_IGUAL expresion {$$ = {
             returnInstruction: new relacional.default(relacional.tipoOp.MENOR_IGUAL, $1.returnInstruction, $4.returnInstruction, @1.first_line, @1.first_column),
-            nodeInstruction: (new Nodo('EXPRESION_RELACIONAL')).generateProduction([$1.nodeInstruction, $2, $4.nodeInstruction])
+            nodeInstruction: (new Nodo('EXPRESION_RELACIONAL')).generateProduction([$1.nodeInstruction, $2+$3, $4.nodeInstruction])
             }}
         |expresion T_MENORQ expresion {$$ = {
             returnInstruction: new relacional.default(relacional.tipoOp.MENOR, $1.returnInstruction, $3.returnInstruction, @1.first_line, @1.first_column),
@@ -444,11 +453,11 @@ expresion_relacional:
             }}
         |expresion T_IGUAL T_IGUAL expresion {$$ = {
             returnInstruction: new relacional.default(relacional.tipoOp.IGUAL_IGUAL, $1.returnInstruction, $4.returnInstruction, @1.first_line, @1.first_column),
-            nodeInstruction: (new Nodo('EXPRESION_RELACIONAL')).generateProduction([$1.nodeInstruction, $2, $4.nodeInstruction])
+            nodeInstruction: (new Nodo('EXPRESION_RELACIONAL')).generateProduction([$1.nodeInstruction, $2+$3, $4.nodeInstruction])
             }}
         |expresion T_DIFERENTE T_IGUAL expresion {$$ = {
             returnInstruction: new relacional.default(relacional.tipoOp.DIFERENTE_IGUAL, $1.returnInstruction, $4.returnInstruction, @1.first_line, @1.first_column),
-            nodeInstruction: (new Nodo('EXPRESION_RELACIONAL')).generateProduction([$1.nodeInstruction, $2, $4.nodeInstruction])
+            nodeInstruction: (new Nodo('EXPRESION_RELACIONAL')).generateProduction([$1.nodeInstruction, $2+$3, $4.nodeInstruction])
             }}
 ;
 

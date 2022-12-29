@@ -31,7 +31,6 @@ class ReturnIns extends Instruccion_1.Instruccion {
         this.valor = valor;
     }
     interpretar(arbol, tabla) {
-        console.log("holaaaaaaaaa");
         const returnValue = this.valor.interpretar(arbol, tabla);
         this.tipoDato = this.valor.tipoDato;
         return returnValue;

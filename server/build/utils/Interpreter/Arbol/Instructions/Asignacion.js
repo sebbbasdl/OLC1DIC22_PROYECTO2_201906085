@@ -37,8 +37,6 @@ class Asignacion extends Instruccion_1.Instruccion {
     }
     interpretar(arbol, tabla) {
         const valorToAsign = this.valor.interpretar(arbol, tabla);
-        console.log("asignacion");
-        console.log(valorToAsign);
         tabla.setValor(this.id, new Symbol_1.default(this.valor.tipoDato, this.id, valorToAsign), false);
         return null;
     }

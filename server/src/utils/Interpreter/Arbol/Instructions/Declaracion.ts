@@ -18,8 +18,7 @@ export default class Declaracion extends Instruccion {
     }
 
     public interpretar(arbol: Arbol, tabla: tablaSimbolo) {
-        console.log(this.tipo.getTipo())
-        console.log(this.valor.tipoDato.getTipo())
+    
         if(this.tipo.getTipo()==this.valor.tipoDato.getTipo() ||this.valor.tipoDato.getTipo()==7){
             tabla.setValor(this.id, new Simbolo(this.tipo, this.id, this.valor.interpretar(arbol, tabla)));
         }else{

@@ -44,6 +44,7 @@ class If extends Instruccion_1.Instruccion {
             for (let i of this.listaInstrucciones) {
                 i.interpretar(arbol, tablaLocal);
             }
+            console.log("estoy aqui1");
             return true;
         }
         else {
@@ -54,12 +55,14 @@ class If extends Instruccion_1.Instruccion {
                         return false;
                     }
                 }
+                console.log("estoy aqui2");
             }
             if (this.listaInsElse) {
                 const tablaLocal = new SymbolTable_1.default(tabla);
                 for (let i of this.listaInsElse) {
                     i.interpretar(arbol, tablaLocal);
                 }
+                console.log("estoy aqui3");
                 return false;
             }
         }

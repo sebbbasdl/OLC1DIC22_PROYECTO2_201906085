@@ -37,8 +37,6 @@ class Declaracion extends Instruccion_1.Instruccion {
         this.valor = valor;
     }
     interpretar(arbol, tabla) {
-        console.log(this.tipo.getTipo());
-        console.log(this.valor.tipoDato.getTipo());
         if (this.tipo.getTipo() == this.valor.tipoDato.getTipo() || this.valor.tipoDato.getTipo() == 7) {
             tabla.setValor(this.id, new Symbol_1.default(this.tipo, this.id, this.valor.interpretar(arbol, tabla)));
         }

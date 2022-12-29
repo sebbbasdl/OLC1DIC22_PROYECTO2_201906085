@@ -31,8 +31,6 @@ const parse = (req, res) => {
                 ast.actualizaConsola(resultador.returnError());
             }
         }
-        console.log("------hola sere------");
-        console.log(ast.gettablaGlobal());
         const arbolGrafo = ast.getTree("ast");
         //console.log(arbolGrafo)
         (0, adapter_1.toFile)(arbolGrafo, './result.png', { format: 'png' });

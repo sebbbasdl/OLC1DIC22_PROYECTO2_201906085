@@ -36,8 +36,7 @@ export const parse = (req: Request & unknown, res: Response): void => {
           ast.actualizaConsola((<Errores>resultador).returnError());
         }        
       }   
-      console.log("------hola sere------")
-      console.log( ast.gettablaGlobal())      
+          
       const arbolGrafo = ast.getTree("ast");
       //console.log(arbolGrafo)
       

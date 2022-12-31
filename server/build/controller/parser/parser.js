@@ -9,6 +9,7 @@ const Three_1 = __importDefault(require("../../utils/Interpreter/Arbol/Symbol/Th
 const SymbolTable_1 = __importDefault(require("../../utils/Interpreter/Arbol/Symbol/SymbolTable"));
 const Instruccion_1 = require("../../utils/Interpreter/Arbol/Abstract/Instruccion");
 const adapter_1 = require("ts-graphviz/adapter");
+const SymbolTable_2 = require("../../utils/Interpreter/Arbol/Symbol/SymbolTable");
 exports.listaErrores = [];
 const parse = (req, res) => {
     exports.listaErrores = new Array();
@@ -34,7 +35,8 @@ const parse = (req, res) => {
         const arbolGrafo = ast.getTree("ast");
         //console.log(arbolGrafo)
         (0, adapter_1.toFile)(arbolGrafo, './result.png', { format: 'png' });
-        res.json({ consola: ast.getconsola(), grafo: arbolGrafo, errores: exports.listaErrores, tabla_simbolos: ast.gettablaGlobal(), errores_sematicos: ast.getSemanticError() });
+        res.json({ consola: ast.getconsola(), grafo: arbolGrafo, errores: exports.listaErrores, tabla_simbolos: SymbolTable_2.myGlobal, errores_sematicos: ast.getSemanticError() });
+        SymbolTable_2.myGlobal.splice(0, SymbolTable_2.myGlobal.length);
     }
     catch (err) {
         console.log(err);

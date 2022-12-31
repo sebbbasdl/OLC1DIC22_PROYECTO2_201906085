@@ -6,6 +6,8 @@ import { Instruccion } from "../../utils/Interpreter/Arbol/Abstract/Instruccion"
 import { type } from "os";
 import * as graphviz from 'graphviz';
 import { toFile } from 'ts-graphviz/adapter';
+import {myGlobal} from "../../utils/Interpreter/Arbol/Symbol/SymbolTable";
+import { allOptions } from "vis-network/declarations/network/options";
 
 
 
@@ -40,11 +42,13 @@ export const parse = (req: Request & unknown, res: Response): void => {
       const arbolGrafo = ast.getTree("ast");
       //console.log(arbolGrafo)
       
+      
 
       toFile(arbolGrafo, './result.png', { format: 'png' });
       
-      
-      res.json({ consola: ast.getconsola(), grafo: arbolGrafo, errores: listaErrores, tabla_simbolos: ast.gettablaGlobal()  , errores_sematicos: ast.getSemanticError() });
+      res.json({ consola: ast.getconsola(), grafo: arbolGrafo, errores: listaErrores, tabla_simbolos: myGlobal  , errores_sematicos: ast.getSemanticError() });
+      myGlobal.splice(0, myGlobal.length);
+     
     } catch (err) {
         console.log(err)
         res.json({ consola: '', error: err, errores: listaErrores, simbolos: [] });

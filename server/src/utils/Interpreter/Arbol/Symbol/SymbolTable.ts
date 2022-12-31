@@ -1,6 +1,9 @@
 import Simbolo from './Symbol';
 
+export let myGlobal: string[]=[];
+
 export default class SymbolTable {
+  
   private tablaAnterior: SymbolTable | any;
   private tablaActual: Map<String, Simbolo>;
 
@@ -38,6 +41,7 @@ export default class SymbolTable {
       if(!oldValue) console.log('Error la variable no existe')
     }
     this.tablaActual.set(id,valor)
+    myGlobal.push( id+"="+this.tablaActual.get(id)?.getvalor())
     console.log(id+"="+this.tablaActual.get(id)?.getvalor())
     return null;
   }

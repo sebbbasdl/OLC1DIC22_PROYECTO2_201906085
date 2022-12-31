@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.myGlobal = void 0;
+exports.myGlobal = [];
 class SymbolTable {
     constructor(anterior) {
         this.tablaAnterior = anterior;
@@ -17,7 +19,7 @@ class SymbolTable {
         return valor;
     }
     setValor(id, valor, declaration = true) {
-        var _a;
+        var _a, _b;
         if (declaration)
             this.tablaActual.set(id, valor);
         else {
@@ -36,7 +38,8 @@ class SymbolTable {
                 console.log('Error la variable no existe');
         }
         this.tablaActual.set(id, valor);
-        console.log(id + "=" + ((_a = this.tablaActual.get(id)) === null || _a === void 0 ? void 0 : _a.getvalor()));
+        exports.myGlobal.push(id + "=" + ((_a = this.tablaActual.get(id)) === null || _a === void 0 ? void 0 : _a.getvalor()));
+        console.log(id + "=" + ((_b = this.tablaActual.get(id)) === null || _b === void 0 ? void 0 : _b.getvalor()));
         return null;
     }
     getAnterior() {

@@ -81,7 +81,7 @@
 (\'[^\']\')|(\'\'\'\')|("#"{ENTERO}) return 'CHAR';
 
 <<EOF>>                     return 'EOF';
-.                           return 'INVALID'
+.                           {controller.listaErrores.push(new errores.default('ERROR LEXICO',yytext,yylloc.first_line,yylloc.first_column));}
 
 /lex
 
@@ -118,6 +118,7 @@ instrucciones :
             returnInstruction: [$1.returnInstruction],
             nodeInstruction: (new Nodo("Instrucciones")).generateProduction([$1.nodeInstruction])
             };}
+    | error  instruccion         {$$={returnInstruction: controller.listaErrores.push(new errores.default(`ERROR SINTACTICO`,yytext,@1.first_line,@1.first_column))}}
 ;
 
 instruccion : imprimir  {$$={
@@ -153,8 +154,7 @@ instruccion : imprimir  {$$={
             };
             } 
 
-            | INVALID               {controller.listaErrores.push(new errores.default('ERROR LEXICO',$1,@1.first_line,@1.first_column));}
-            | error  PTCOMA         {controller.listaErrores.push(new errores.default(`ERROR SINTACTICO`,"Se esperaba token",@1.first_line,@1.first_column));}
+            
 ;
 
 imprimible:

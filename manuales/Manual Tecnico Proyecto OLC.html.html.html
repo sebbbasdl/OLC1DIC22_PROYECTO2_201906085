@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual Tecnico Proyecto OLC.html.html</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><p>Manual Tecnico Proyecto OLC</p>
+<p>Universidad San Carlos de Guatemala<br>
+Facultad de Ingeniería<br>
+Escuela de Ciencias y Sistemas<br>
+Organización de Lenguajes y Compiladores 1</p>
+<p><em>SEBASTIAN ALEJANDRO DE LEON TENAZ 201906085</em></p>
+<h1 id="manual-tecnico---proyecto-2"><strong>MANUAL TECNICO - PROYECTO 2</strong></h1>
+<p>**</p>
+<h2 id="objetivos">Objetivos</h2>
+<p>OBJETIVO GENERAL:</p>
+<ul>
+<li>Aplicar los conocimientos sobre la fase de análisis léxico y sintáctico de un compilador para la realización de un intérprete sencillo, con las funcionalidades principales para que sea funcional.</li>
+</ul>
+<p>OBJETIVOS ESPECIFICOS:</p>
+<ul>
+<li>Reforzar los conocimientos de análisis léxico y sintáctico para la creación de un lenguaje de programación.</li>
+<li>Aplicar los conceptos de compiladores para implementar el proceso de interpretación de código de alto nivel.</li>
+<li>Aplicar los conceptos de compiladores para analizar un lenguaje de programación y producir las salidas esperadas.</li>
+<li>Aplicar la teoría de compiladores para la creación de soluciones de software</li>
+</ul>
+<h2 id="descripcion">Descripcion</h2>
+<p>El curso de Organización de Lenguajes y Compiladores 1, ha puesto en marcha un nuevo proyecto, requerido por la Escuela de Ciencias y Sistemas de la Facultad de Ingeniería, que consiste en crear un lenguaje de programación para que los estudiantes, del curso de Introducción a la Programación y Computación 1, aprendan a programar y tener conocimiento de todas las generalidades de un lenguaje de programación. Cabe destacar, que este lenguaje será utilizado para generar sus primeras prácticas de laboratorio del curso antes mencionado. Por lo tanto, a usted, que es estudiante del curso de Compiladores 1, se le encomienda realizar el proyecto llamado INTERPRETE_U, dado sus altos conocimientos en temas de análisis léxico, sintáctico y semántico.</p>
+<h2 id="arquitectura-del-proyecto">Arquitectura del Proyecto</h2>
+<p>Para el presente proyecto, se le solicita manejar una arquitectura Cliente-Servidor, con el objetivo de que pueda separar los servicios administrados por el intérprete, de la aplicación cliente que se mostrará al usuario final.</p>
+<h2 id="herramientas-utilizadas">Herramientas utilizadas:</h2>
+<ul>
+<li>JavaScript y TypeScript(backend)</li>
+<li>Vue(Frontend)</li>
+<li>Jison</li>
+</ul>
+<h2 id="paquetes-y-clases">Paquetes y Clases:</h2>
+<ul>
+<li>
+<p>Analizador se utilizo la herramienta de “JISON” .</p>
+</li>
+<li>
+<p>Analizador: Esta carpeta tiene los diferentes archivos de las estructuras utilizadas para la captura de datos de todas las instrucciones.<br>
+Se utilizo por cada instruccion un clase para poder obtener los datos de las instrucciones utilizadas en este proyecto. Cada clase tiene un metodo operar que nos sirve para poder enviar los datos a la tabla de simbolos y un metodo Traducir que traduce cada instruccion.<br>
+Estos son algunas de las clases utilizadas:</p>
+<ul>
+<li>Declaracion.js<br>
+<img src="https://github.com/sebbbasdl/OLC1DIC22_PROYECTO2_201906085/blob/master/manuales/imagenes/declaracion.PNG?raw=true" alt=""></li>
+<li>Imprimir.js<br>
+<img src="https://github.com/sebbbasdl/OLC1DIC22_PROYECTO2_201906085/blob/master/manuales/imagenes/imprimir.PNG?raw=true" alt=""></li>
+</ul>
+</li>
+<li>
+<p>Instruccion.js: Esta clase obtenia todas las instrucciones y utilizaba la funcion interpretar que manda como parametros el arbol ast y la tabla de simbolos para poder realizar una ejecucion de  manera eficiente.<br>
+<img src="https://github.com/sebbbasdl/OLC1DIC22_PROYECTO2_201906085/blob/master/manuales/imagenes/instruccion.PNG?raw=true" alt=""></p>
+</li>
+</ul>
+<h2 id="backend">Backend</h2>
+<p>Para enviar los datos(tabla de simbolos, tabla de errores lexicos, tabla de errores sintacticos, traduccion) al Frontend se utilizo el archivo parser.ts<br>
+<img src="https://github.com/sebbbasdl/OLC1DIC22_PROYECTO2_201906085/blob/master/manuales/imagenes/parser.PNG?raw=true" alt=""></p>
+<h2 id="frontend">Frontend</h2>
+<p>Se utilizo vue para el frontend en donde mayor mente se utilzo el siguiente archivo para poder capturar los datos enviados desde el backend y utilizarlos en nuestra interfaz.</p>
+<p>-HomeView.vue:<br>
+<img src="https://github.com/sebbbasdl/OLC1DIC22_PROYECTO2_201906085/blob/master/manuales/imagenes/home.PNG?raw=true" alt=""></p>
+<h2 id="analisis-lexico-y-sintactico">Analisis lexico y sintactico:</h2>
+<p>-Analisis Lexico utilizado en el proyecto.<br>
+<img src="https://github.com/sebbbasdl/OLC1DIC22_PROYECTO2_201906085/blob/master/manuales/imagenes/lexico.PNG?raw=true" alt=""><br>
+-Gramatica. recursiva por la izquierda utilizada en el proyecto.<br>
+<img src="https://github.com/sebbbasdl/OLC1DIC22_PROYECTO2_201906085/blob/master/manuales/imagenes/sintactico.PNG?raw=true" alt=""></p>
+</div>
+</body>
+
+</html>

@@ -14,6 +14,7 @@
     const { Nodo } = require('./Symbol/Three');
     const procedureDec = require('./Instructions/ProcedureDec');
     const procedureExec = require('./Instructions/ProcedureExec');
+    const forr = require('./Instructions/ForIns'); 
 %}
 %lex 
 
@@ -21,6 +22,8 @@
 %options case-insensitive 
 //inicio analisis lexico
 %%
+"//".* 	                              // comentario simple línea
+[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]  // comentario multiple líneas
 "WriteLine"			return 'RESPRINT';
 "while"				return 'T_WHILE'
 "for"				return 'T_FOR';
@@ -143,6 +146,12 @@ instruccion : imprimir  {$$={
                 nodeInstruction: (new Nodo("INSTRUCCION")).generateProduction([$1.nodeInstruction]) 
             };
             } 
+            |forins {
+            $$={
+                returnInstruction: $1.returnInstruction, 
+                nodeInstruction: (new Nodo("INSTRUCCION")).generateProduction([$1.nodeInstruction]) 
+            };
+            } 
 
             | INVALID               {controller.listaErrores.push(new errores.default('ERROR LEXICO',$1,@1.first_line,@1.first_column));}
             | error  PTCOMA         {controller.listaErrores.push(new errores.default(`ERROR SINTACTICO`,"Se esperaba token",@1.first_line,@1.first_column));}
@@ -194,7 +203,14 @@ expresion : ENTERO {$$={
             returnInstruction: new aritmetico.default(aritmetico.tipoOp.DIVISION, $1.returnInstruction, $3.returnInstruction, @1.first_line, @1.first_column),
             nodeInstruction: (new Nodo('EXPRESION')).generateProduction([$1.nodeInstruction, '/', $3.nodeInstruction])
             }}
-            
+            | expresion T_MAS T_MAS{$$={
+            returnInstruction: new aritmetico.default(aritmetico.tipoOp.INCREMENTO, $1.returnInstruction, $3.returnInstruction, @1.first_line, @1.first_column),
+            nodeInstruction: (new Nodo('EXPRESION')).generateProduction([$1.nodeInstruction, '++'])
+            }}
+            | expresion T_MENOS T_MENOS{$$={
+            returnInstruction: new aritmetico.default(aritmetico.tipoOp.DECREMENTO, $1.returnInstruction, $3.returnInstruction, @1.first_line, @1.first_column),
+            nodeInstruction: (new Nodo('EXPRESION')).generateProduction([$1.nodeInstruction, '--'])
+            }}
             | PARABRE expresion PARCIERRA {$$={
             returnInstruction: $2.returnInstruction,
             nodeInstruction: (new Nodo('EXPRESION')).generateProduction([$1.nodeInstruction, $2.nodeInstruction, $3.nodeInstruction])
@@ -431,6 +447,14 @@ whileins:
                             {$$ = {
             returnInstruction: new mientras.default($3.returnInstruction,$6.returnInstruction,@1.first_line,@1.first_column),
             nodeInstruction: (new Nodo("WHILEINS")).generateProduction([$1, $2, $3.nodeInstruction, $4, $5, $6.nodeInstruction, $7])
+            }}
+;
+
+forins:
+    T_FOR PARABRE declaracion expresion_logica PTCOMA expresion PARCIERRA LLAVIZQ instrucciones LLAVDER
+    {$$ = {
+            returnInstruction: new forr.default($3.returnInstruction,$4.returnInstruction,$6.returnInstruction,$9.returnInstruction,@1.first_line,@1.first_column),
+            nodeInstruction: (new Nodo("FORINS")).generateProduction([$1, $2, $3.nodeInstruction, $4.nodeInstruction, $5, $6.nodeInstruction, $7,$8,$9.nodeInstruction,$10])
             }}
 ;
 

@@ -44,7 +44,7 @@ export const parse = (req: Request & unknown, res: Response): void => {
       toFile(arbolGrafo, './result.png', { format: 'png' });
       
       
-      res.json({ consola: ast.getconsola(), grafo: arbolGrafo, errores: listaErrores, simbolos: ast.gettablaGlobal()  , errores_sematicos: ast.getSemanticError() });
+      res.json({ consola: ast.getconsola(), grafo: arbolGrafo, errores: listaErrores, tabla_simbolos: ast.gettablaGlobal()  , errores_sematicos: ast.getSemanticError() });
     } catch (err) {
         console.log(err)
         res.json({ consola: '', error: err, errores: listaErrores, simbolos: [] });

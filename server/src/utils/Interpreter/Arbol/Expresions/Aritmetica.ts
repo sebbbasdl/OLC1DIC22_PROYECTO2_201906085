@@ -28,6 +28,14 @@ export default class Aritmetico extends Instruccion {
                     this.tipoDato.setTipo(DataType.CADENA);
                     return (`${valueIzq.toString()}${valueDer.toString()}`);
                 }
+            }else if(this.operacionIzq.tipoDato.getTipo() === DataType.CADENA){
+                if(this.operacionDer.tipoDato.getTipo() === DataType.CADENA){
+                    this.tipoDato.setTipo(DataType.CADENA);
+                    return (valueIzq+valueDer);
+                }else if(this.operacionDer.tipoDato.getTipo() === DataType.CADENA){
+                    this.tipoDato.setTipo(DataType.CADENA);
+                    return (`${valueIzq.toString()}${valueDer.toString()}`);
+                }
             }
         } else if(this.tipo===tipoOp.RESTA){    
             let valueIzq = this.operacionIzq.interpretar(arbol, tabla);
@@ -56,7 +64,26 @@ export default class Aritmetico extends Instruccion {
                     return (Number(valueIzq)/Number(valueDer));
                 }
             }
+        } else if(this.tipo===tipoOp.INCREMENTO){    
+            let valueIzq = this.operacionIzq.interpretar(arbol, tabla);
+            //let valueDer = this.operacionDer.interpretar(arbol, tabla);
+            if(this.operacionIzq.tipoDato.getTipo() === DataType.ENTERO){
+                
+                    this.tipoDato.setTipo(DataType.ENTERO);
+                    return (Number(valueIzq)+1);
+                
+            }
+        } else if(this.tipo===tipoOp.DECREMENTO){    
+            let valueIzq = this.operacionIzq.interpretar(arbol, tabla);
+            //let valueDer = this.operacionDer.interpretar(arbol, tabla);
+            if(this.operacionIzq.tipoDato.getTipo() === DataType.ENTERO){
+                
+                    this.tipoDato.setTipo(DataType.ENTERO);
+                    return (Number(valueIzq)-1);
+                
+            }
         } 
+
         
         return null;
   }
@@ -66,5 +93,7 @@ export enum tipoOp{
     SUMA,
     RESTA,
     DIVISION,
-    MULTIPLICACION
+    MULTIPLICACION,
+    INCREMENTO,
+    DECREMENTO
 }

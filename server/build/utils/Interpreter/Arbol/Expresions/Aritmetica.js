@@ -47,6 +47,16 @@ class Aritmetico extends Instruccion_1.Instruccion {
                     return (`${valueIzq.toString()}${valueDer.toString()}`);
                 }
             }
+            else if (this.operacionIzq.tipoDato.getTipo() === Type_1.DataType.CADENA) {
+                if (this.operacionDer.tipoDato.getTipo() === Type_1.DataType.CADENA) {
+                    this.tipoDato.setTipo(Type_1.DataType.CADENA);
+                    return (valueIzq + valueDer);
+                }
+                else if (this.operacionDer.tipoDato.getTipo() === Type_1.DataType.CADENA) {
+                    this.tipoDato.setTipo(Type_1.DataType.CADENA);
+                    return (`${valueIzq.toString()}${valueDer.toString()}`);
+                }
+            }
         }
         else if (this.tipo === tipoOp.RESTA) {
             let valueIzq = this.operacionIzq.interpretar(arbol, tabla);
@@ -78,6 +88,22 @@ class Aritmetico extends Instruccion_1.Instruccion {
                 }
             }
         }
+        else if (this.tipo === tipoOp.INCREMENTO) {
+            let valueIzq = this.operacionIzq.interpretar(arbol, tabla);
+            //let valueDer = this.operacionDer.interpretar(arbol, tabla);
+            if (this.operacionIzq.tipoDato.getTipo() === Type_1.DataType.ENTERO) {
+                this.tipoDato.setTipo(Type_1.DataType.ENTERO);
+                return (Number(valueIzq) + 1);
+            }
+        }
+        else if (this.tipo === tipoOp.DECREMENTO) {
+            let valueIzq = this.operacionIzq.interpretar(arbol, tabla);
+            //let valueDer = this.operacionDer.interpretar(arbol, tabla);
+            if (this.operacionIzq.tipoDato.getTipo() === Type_1.DataType.ENTERO) {
+                this.tipoDato.setTipo(Type_1.DataType.ENTERO);
+                return (Number(valueIzq) - 1);
+            }
+        }
         return null;
     }
 }
@@ -88,4 +114,6 @@ var tipoOp;
     tipoOp[tipoOp["RESTA"] = 1] = "RESTA";
     tipoOp[tipoOp["DIVISION"] = 2] = "DIVISION";
     tipoOp[tipoOp["MULTIPLICACION"] = 3] = "MULTIPLICACION";
+    tipoOp[tipoOp["INCREMENTO"] = 4] = "INCREMENTO";
+    tipoOp[tipoOp["DECREMENTO"] = 5] = "DECREMENTO";
 })(tipoOp = exports.tipoOp || (exports.tipoOp = {}));

@@ -34,7 +34,7 @@ const parse = (req, res) => {
         const arbolGrafo = ast.getTree("ast");
         //console.log(arbolGrafo)
         (0, adapter_1.toFile)(arbolGrafo, './result.png', { format: 'png' });
-        res.json({ consola: ast.getconsola(), grafo: arbolGrafo, errores: exports.listaErrores, simbolos: ast.gettablaGlobal(), errores_sematicos: ast.getSemanticError() });
+        res.json({ consola: ast.getconsola(), grafo: arbolGrafo, errores: exports.listaErrores, tabla_simbolos: ast.gettablaGlobal(), errores_sematicos: ast.getSemanticError() });
     }
     catch (err) {
         console.log(err);
